@@ -1,37 +1,25 @@
-import Axios from 'axios';
-import faker from 'faker';
-
-import { range } from './utils';
+import Axios from 'axios'
+import inventory from './inventory'
 
 const axios = Axios.create({
-  baseURL: `https://rur-server.herokuapp.com/`
-});
+  baseURL: `https://rur-server.herokuapp.com/`,
+})
 
-const makeOneProduct = () => ({
-  name: faker.commerce.product(),
-  id: faker.random.uuid(),
-  price: faker.commerce.price(),
-});
-const makeProducts = () => range(30).map(makeOneProduct);
+const getProducts = () => inventory
+
 const mockResponses = {
   get: {
-    '/products': makeProducts
+    '/products': getProducts,
+    '/products?id': getProducts,
   },
-  post: {
-  },
+  post: {},
 }
 
-axios.interceptors.response.use(
-  response => {
-    const { config } = response;
-    const mockFn = mockResponses[config.method][config.url];
+axios.interceptors.response.use((response) => {
+  const { config } = response
+  const mockFn = mockResponses[config.method][config.url]
 
-    return mockFn ? mockFn() : response.data;
-  },
-)
+  return mockFn ? mockFn() : response.data
+})
 
-
-
-export {
-  axios,
-};
+export { axios }

@@ -8,16 +8,20 @@ function Main() {
     <section>
       <Navbar />
 
-      <Switch>
-        {routes.map(({ path, component: Component, exact }, i) => (
-          <Route
-            key={i}
-            path={path}
-            exact={exact}
-            render={(props) => <Component {...props} />}
-          />
-        ))}
-      </Switch>
+      <section className="mobile:px-10 px-4 pb-10 flex justify-center">
+        <section className="w-fw">
+          <Switch>
+            {routes.map(({ path, component: Component, exact }, i) => (
+              <Route
+                key={i}
+                path={path}
+                exact={exact}
+                render={(props) => <Component {...props} />}
+              />
+            ))}
+          </Switch>
+        </section>
+      </section>
     </section>
   )
 }
